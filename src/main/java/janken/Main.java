@@ -8,8 +8,8 @@ public class Main {
     public static void main(String[] args) {
         JankenGame janken;
 
-        janken = new Step0();
-//        janken = new Step1();
+//        janken = new Step0();
+        janken = new Step1();
 
         System.out.println(janken.getClass().getSimpleName());
         janken.execute();
