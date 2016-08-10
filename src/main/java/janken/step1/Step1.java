@@ -1,5 +1,7 @@
 package janken.step1;
 
+import janken.JankenGame;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +15,7 @@ import java.util.regex.Pattern;
 /**
  * 第一ステップ、「１つのメソッドにつきインデントは１段階までにすること」を適用.
  */
-public class Step1 {
+public class Step1 implements JankenGame {
     /**ランダムな値を生成するための {@link Random} インスタンス*/
     private static final Random RANDOM = new Random(System.currentTimeMillis());
     /**入力が不正であったことを表す値*/
@@ -46,6 +48,7 @@ public class Step1 {
     /**
      * じゃんけんプログラムを開始する.
      */
+    @Override
     public void execute() {
         try (BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in))) {
             this.processMainInfinitely(standardInput);
