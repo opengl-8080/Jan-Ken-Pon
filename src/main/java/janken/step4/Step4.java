@@ -1,4 +1,4 @@
-package janken.step3;
+package janken.step4;
 
 import janken.JankenGame;
 
@@ -7,17 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * 第３ステップ、「すべてのプリミティブ型と文字列型をラップすること」を適用.
- * <p>
- * 以下の値を、クラスにラップした.
- * <ul>
- *   <li>ユーザーの主語→{@link User}
- *   <li>コンピュータの主語→{@link Computer}
- *   <li>出し手の数値表現→{@link HandNumber}
- *   <li>出し手の名称→{@link HandName}
- * </ul>
+ * 第４ステップ、「すべてのエンティティを小さくすること」を適用.
  */
-public class Step3 implements JankenGame {
+public class Step4 implements JankenGame {
     /**ユーザー*/
     private static final User USER = new User();
     /**コンピュータ*/
@@ -53,22 +45,22 @@ public class Step3 implements JankenGame {
      */
     private void mainProcess(BufferedReader standardInput) throws IOException {
         System.out.println(
-            "[" + HandNumber.ROCK + "]" + HandName.ROCK + "、" +
-            "[" + HandNumber.SCISSORS + "]" + HandName.SCISSORS + "、" +
-            "[" + HandNumber.PAPER + "]" + HandName.PAPER + "を入力して下さい ⇒ "
+            "[" + Hand.ROCK.getNumber() + "]" + Hand.ROCK + "、" +
+            "[" + Hand.SCISSORS.getNumber() + "]" + Hand.SCISSORS + "、" +
+            "[" + Hand.PAPER.getNumber() + "]" + Hand.PAPER + "を入力して下さい ⇒ "
         );
 
         UserInput userInput = new UserInput(standardInput.readLine());
 
-        if (!HandNumber.isValid(userInput.getValue())) {
+        if (!Hand.isValid(userInput.getValue())) {
             return;
         }
 
-        Hand usersHand = HandNumber.of(userInput.toInt()).getHand();
-        System.out.println(USER.getSubject() + "が出したのは「" + usersHand.getName() + "」です");
+        Hand usersHand = Hand.of(userInput.toInt());
+        System.out.println(USER.getSubject() + "が出したのは「" + usersHand + "」です");
 
-        Hand computersHand = HandNumber.random().getHand();
-        System.out.println(COMPUTER.getSubject() + "が出したのは「" + computersHand.getName() + "」です");
+        Hand computersHand = Hand.random();
+        System.out.println(COMPUTER.getSubject() + "が出したのは「" + computersHand + "」です");
 
         if (usersHand == computersHand) {
             System.out.println("あいこです。");
