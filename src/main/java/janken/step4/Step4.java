@@ -1,72 +1,64 @@
 package janken.step4;
 
 import janken.JankenGame;
+import janken.step4.logic.Computer;
+import janken.step4.logic.Hand;
+import janken.step4.logic.HandName;
+import janken.step4.logic.HandNumber;
+import janken.step4.logic.User;
+import janken.step4.logic.UserInput;
+import janken.step4.ui.Console;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Random;
 
 /**
  * 第４ステップ、「すべてのエンティティを小さくすること」を適用.
  */
 public class Step4 implements JankenGame {
     /**ユーザー*/
-    private static final User USER = new User();
+    private final User user = new User();
     /**コンピュータ*/
-    private static final Computer COMPUTER = new Computer();
+    private final Computer computer = new Computer(new Random(System.currentTimeMillis()));
+    /**コンソール*/
+    private final Console console = new Console(System.in, System.out);
 
     /**
      * じゃんけんプログラムを開始する.
      */
     @Override
     public void execute() {
-        try (BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in))) {
-            this.executeMainProcessInfinitely(standardInput);
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-    }
-
-    /**
-     * メインのじゃんけん処理を、無限ループしながら実行する.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
-    private void executeMainProcessInfinitely(BufferedReader standardInput) throws IOException {
         while (true) {
-            this.mainProcess(standardInput);
+            this.mainProcess();
         }
     }
 
     /**
      * メインのじゃんけん処理.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
      */
-    private void mainProcess(BufferedReader standardInput) throws IOException {
-        System.out.println(
-            "[" + Hand.ROCK.getNumber() + "]" + Hand.ROCK + "、" +
-            "[" + Hand.SCISSORS.getNumber() + "]" + Hand.SCISSORS + "、" +
-            "[" + Hand.PAPER.getNumber() + "]" + Hand.PAPER + "を入力して下さい ⇒ "
+    private void mainProcess() {
+        this.console.println(
+            "[" + HandNumber.ROCK + "]" + HandName.ROCK + "、" +
+            "[" + HandNumber.SCISSORS + "]" + HandName.SCISSORS + "、" +
+            "[" + HandNumber.PAPER + "]" + HandName.PAPER + "を入力して下さい ⇒ "
         );
 
-        UserInput userInput = new UserInput(standardInput.readLine());
+        UserInput userInput = this.console.readUserInput();
 
-        if (!Hand.isValid(userInput.getValue())) {
+        if (!HandNumber.isValid(userInput.getValue())) {
             return;
         }
 
-        Hand usersHand = Hand.of(userInput.toInt());
-        System.out.println(USER.getSubject() + "が出したのは「" + usersHand + "」です");
+        Hand usersHand = HandNumber.toHand(userInput.toInt());
+        this.console.println(user.getSubject() + "が出したのは「" + HandName.toHandName(usersHand) + "」です");
 
-        Hand computersHand = Hand.random();
-        System.out.println(COMPUTER.getSubject() + "が出したのは「" + computersHand + "」です");
+        Hand computersHand = computer.getNextHand();
+        this.console.println(computer.getSubject() + "が出したのは「" + HandName.toHandName(computersHand) + "」です");
 
         if (usersHand == computersHand) {
-            System.out.println("あいこです。");
+            this.console.println("あいこです。");
             return;
         }
 
-        System.out.println((usersHand.winTo(computersHand) ? USER.getSubject() : COMPUTER.getSubject()) + "の勝ちです。");
+        this.console.println((usersHand.winTo(computersHand) ? user.getSubject() : computer.getSubject()) + "の勝ちです。");
     }
 }

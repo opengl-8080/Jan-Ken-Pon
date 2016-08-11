@@ -5,6 +5,7 @@ import janken.JankenGame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 
 /**
  * 第３ステップ、「すべてのプリミティブ型と文字列型をラップすること」を適用.
@@ -19,19 +20,20 @@ import java.io.InputStreamReader;
  */
 public class Step3 implements JankenGame {
     /**ユーザー*/
-    private static final User USER = new User();
+    private final User user = new User();
     /**コンピュータ*/
-    private static final Computer COMPUTER = new Computer();
+    private final Computer computer = new Computer();
 
     /**
      * じゃんけんプログラムを開始する.
      */
     @Override
     public void execute() {
-        try (BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in))) {
+        try {
+            BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
             this.executeMainProcessInfinitely(standardInput);
         } catch (IOException e) {
-            e.printStackTrace(System.err);
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -65,16 +67,16 @@ public class Step3 implements JankenGame {
         }
 
         Hand usersHand = HandNumber.of(userInput.toInt()).getHand();
-        System.out.println(USER.getSubject() + "が出したのは「" + usersHand.getName() + "」です");
+        System.out.println(user.getSubject() + "が出したのは「" + usersHand.getName() + "」です");
 
         Hand computersHand = HandNumber.random().getHand();
-        System.out.println(COMPUTER.getSubject() + "が出したのは「" + computersHand.getName() + "」です");
+        System.out.println(computer.getSubject() + "が出したのは「" + computersHand.getName() + "」です");
 
         if (usersHand == computersHand) {
             System.out.println("あいこです。");
             return;
         }
 
-        System.out.println((usersHand.winTo(computersHand) ? USER.getSubject() : COMPUTER.getSubject()) + "の勝ちです。");
+        System.out.println((usersHand.winTo(computersHand) ? user.getSubject() : computer.getSubject()) + "の勝ちです。");
     }
 }

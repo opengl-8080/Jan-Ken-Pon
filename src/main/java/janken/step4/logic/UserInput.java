@@ -1,9 +1,10 @@
-package janken.step4;
+package janken.step4.logic;
 
 /**
  * ユーザーが入力した値.
  */
 public class UserInput {
+    /**入力値*/
     private final String value;
 
     /**

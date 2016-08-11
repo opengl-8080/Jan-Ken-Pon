@@ -5,6 +5,7 @@ import janken.JankenGame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,7 +47,9 @@ public class Step0 implements JankenGame {
      */
     @Override
     public void execute() {
-        try (BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in))) {
+        try {
+            BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
+
             while (true) {
                 System.out.println(
                     "[" + ROCK + "]" + DISPLAY_NAME_ROCK + "、" +
@@ -114,7 +117,7 @@ public class Step0 implements JankenGame {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace(System.err);
+            throw new UncheckedIOException(e);
         }
     }
 }

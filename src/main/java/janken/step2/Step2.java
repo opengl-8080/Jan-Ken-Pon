@@ -5,6 +5,7 @@ import janken.JankenGame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 
 /**
  * 第２ステップ、「else 句を使用しないこと」を適用.
@@ -26,10 +27,11 @@ public class Step2 implements JankenGame {
      */
     @Override
     public void execute() {
-        try (BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in))) {
+        try {
+            BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
             this.executeMainProcessInfinitely(standardInput);
         } catch (IOException e) {
-            e.printStackTrace(System.err);
+            throw new UncheckedIOException(e);
         }
     }
 

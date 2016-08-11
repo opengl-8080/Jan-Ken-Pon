@@ -1,4 +1,4 @@
-package janken.step4;
+package janken.step4.logic;
 
 /**
  * ユーザー.
