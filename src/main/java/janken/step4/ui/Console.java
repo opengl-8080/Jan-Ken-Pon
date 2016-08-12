@@ -1,7 +1,5 @@
 package janken.step4.ui;
 
-import janken.step4.logic.UserInput;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

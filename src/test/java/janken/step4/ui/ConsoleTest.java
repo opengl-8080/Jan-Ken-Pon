@@ -1,6 +1,5 @@
 package janken.step4.ui;
 
-import janken.step4.logic.UserInput;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

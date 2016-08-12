@@ -3,12 +3,13 @@ package janken.step4.logic;
 /**
  * ユーザー.
  */
-public class User {
+public class User extends Player {
 
-    /**
-     * 主語を取得する.
-     * @return 主語
-     */
+    public User(HandSupplier handSupplier) {
+        super(handSupplier);
+    }
+
+    @Override
     public String getSubject() {
         return "あなた";
     }

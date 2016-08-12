@@ -1,4 +1,4 @@
-package janken.step4.logic;
+package janken.step4.ui;
 
 /**
  * ユーザーが入力した値.

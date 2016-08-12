@@ -2,12 +2,15 @@ package janken.step4;
 
 import janken.JankenGame;
 import janken.step4.logic.Computer;
-import janken.step4.logic.Hand;
 import janken.step4.logic.HandName;
 import janken.step4.logic.HandNumber;
+import janken.step4.logic.Janken;
+import janken.step4.logic.Player;
+import janken.step4.logic.RandomHandSupplier;
 import janken.step4.logic.User;
-import janken.step4.logic.UserInput;
 import janken.step4.ui.Console;
+import janken.step4.ui.IllegalInputException;
+import janken.step4.ui.UserInputHandSupplier;
 
 import java.util.Random;
 
@@ -16,17 +19,23 @@ import java.util.Random;
  */
 public class Step4 implements JankenGame {
     /**ユーザー*/
-    private final User user = new User();
+    private User user;
     /**コンピュータ*/
-    private final Computer computer = new Computer(new Random(System.currentTimeMillis()));
+    private Computer computer;
     /**コンソール*/
     private final Console console = new Console(System.in, System.out);
+    /**じゃんけんを実行するクラス*/
+    private Janken janken;
 
     /**
      * じゃんけんプログラムを開始する.
      */
     @Override
     public void execute() {
+        this.user = new User(new UserInputHandSupplier(this.console));
+        this.computer = new Computer(new RandomHandSupplier(new Random(System.currentTimeMillis())));
+        this.janken = new Janken(this.user, this.computer);
+
         while (true) {
             this.mainProcess();
         }
@@ -42,23 +51,20 @@ public class Step4 implements JankenGame {
             "[" + HandNumber.PAPER + "]" + HandName.PAPER + "を入力して下さい ⇒ "
         );
 
-        UserInput userInput = this.console.readUserInput();
+        try {
+            this.janken.pon();
+            this.console.println(this.user.getSubject() + "が出したのは「" + HandName.toHandName(this.user.getHand()) + "」です");
+            this.console.println(this.computer.getSubject() + "が出したのは「" + HandName.toHandName(this.computer.getHand()) + "」です");
 
-        if (!HandNumber.isValid(userInput.getValue())) {
-            return;
+            if (this.janken.isDraw()) {
+                this.console.println("あいこです。");
+                return;
+            }
+
+            Player winner = this.janken.getWinner();
+            this.console.println(winner.getSubject() + "の勝ちです。");
+        } catch (IllegalInputException e) {
+            // 入力不正はスキップ
         }
-
-        Hand usersHand = HandNumber.toHand(userInput.toInt());
-        this.console.println(user.getSubject() + "が出したのは「" + HandName.toHandName(usersHand) + "」です");
-
-        Hand computersHand = computer.getNextHand();
-        this.console.println(computer.getSubject() + "が出したのは「" + HandName.toHandName(computersHand) + "」です");
-
-        if (usersHand == computersHand) {
-            this.console.println("あいこです。");
-            return;
-        }
-
-        this.console.println((usersHand.winTo(computersHand) ? user.getSubject() : computer.getSubject()) + "の勝ちです。");
     }
 }
