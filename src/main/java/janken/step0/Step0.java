@@ -21,30 +21,17 @@ import java.util.regex.Pattern;
  * </ul>
  */
 public class Step0 implements JankenGame {
-    /**ランダムな値を生成するための {@link Random} インスタンス*/
     private static final Random RANDOM = new Random(System.currentTimeMillis());
-    /**グー*/
     private static final int ROCK = 1;
-    /**チョキ*/
     private static final int SCISSORS = 2;
-    /**パー*/
     private static final int PAPER = 3;
-    /**ユーザーの主語*/
-    private static final String USER_SUBJECT = "あなた";
-    /**コンピュータの主語*/
-    private static final String COMPUTER_SUBJECT = "わたし";
-    /**グーの表示名*/
+    private static final String USER_NAME = "あなた";
+    private static final String COMPUTER_NAME = "わたし";
     private static final String DISPLAY_NAME_ROCK = "グー";
-    /**チョキの表示名*/
     private static final String DISPLAY_NAME_SCISSORS = "チョキ";
-    /**パーの表示名*/
     private static final String DISPLAY_NAME_PAPER = "パー";
-    /**出し手が規定の値かどうかを判定するための正規表現パターン*/
     private static final Pattern HAND_REGEXP_PATTERN = Pattern.compile("[" + ROCK + SCISSORS + PAPER + "]");
 
-    /**
-     * じゃんけんプログラムを開始する.
-     */
     @Override
     public void execute() {
         try {
@@ -73,7 +60,7 @@ public class Step0 implements JankenGame {
                         handDisplayName = DISPLAY_NAME_PAPER;
                     }
 
-                    System.out.println(USER_SUBJECT + "が出したのは「" + handDisplayName + "」です");
+                    System.out.println(USER_NAME + "が出したのは「" + handDisplayName + "」です");
 
                     int computersHand = RANDOM.nextInt(3) + 1;
 
@@ -85,7 +72,7 @@ public class Step0 implements JankenGame {
                         handDisplayName = DISPLAY_NAME_PAPER;
                     }
 
-                    System.out.println(COMPUTER_SUBJECT + "が出したのは「" + handDisplayName + "」です");
+                    System.out.println(COMPUTER_NAME + "が出したのは「" + handDisplayName + "」です");
 
                     if (usersHand == computersHand) {
                         System.out.println("あいこです。");
@@ -94,21 +81,21 @@ public class Step0 implements JankenGame {
 
                         if (usersHand == ROCK) {
                             if (computersHand == SCISSORS) {
-                                winner = USER_SUBJECT;
+                                winner = USER_NAME;
                             } else {
-                                winner = COMPUTER_SUBJECT;
+                                winner = COMPUTER_NAME;
                             }
                         } else if (usersHand == SCISSORS) {
                             if (computersHand == PAPER) {
-                                winner = USER_SUBJECT;
+                                winner = USER_NAME;
                             } else {
-                                winner = COMPUTER_SUBJECT;
+                                winner = COMPUTER_NAME;
                             }
                         } else {
                             if (computersHand == ROCK) {
-                                winner = USER_SUBJECT;
+                                winner = USER_NAME;
                             } else {
-                                winner = COMPUTER_SUBJECT;
+                                winner = COMPUTER_NAME;
                             }
                         }
 

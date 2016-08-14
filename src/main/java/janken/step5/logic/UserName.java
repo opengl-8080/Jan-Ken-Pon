@@ -1,8 +1,9 @@
 package janken.step5.logic;
 
-public class User {
+public class UserName {
 
-    public String getSubject() {
+    @Override
+    public String toString() {
         return "あなた";
     }
 }

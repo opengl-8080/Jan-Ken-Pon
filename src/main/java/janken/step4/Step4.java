@@ -2,8 +2,8 @@ package janken.step4;
 
 import janken.JankenGame;
 import janken.step4.controller.JankenController;
-import janken.step4.logic.Computer;
-import janken.step4.logic.User;
+import janken.step4.logic.ComputerName;
+import janken.step4.logic.UserName;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,8 +21,8 @@ public class Step4 implements JankenGame {
     @Override
     public void execute() {
         try {
-            User user = new User();
-            Computer computer = new Computer();
+            UserName user = new UserName();
+            ComputerName computer = new ComputerName();
             BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
 
             JankenController controller = new JankenController();

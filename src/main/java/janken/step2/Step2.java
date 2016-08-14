@@ -17,14 +17,9 @@ import java.io.UncheckedIOException;
  * そちらに移動させた.
  */
 public class Step2 implements JankenGame {
-    /**ユーザーの主語*/
-    private static final String USER_SUBJECT = "あなた";
-    /**コンピュータの主語*/
-    private static final String COMPUTER_SUBJECT = "わたし";
+    private static final String USER_NAME = "あなた";
+    private static final String COMPUTER_NAME = "わたし";
 
-    /**
-     * じゃんけんプログラムを開始する.
-     */
     @Override
     public void execute() {
         try {
@@ -35,22 +30,12 @@ public class Step2 implements JankenGame {
         }
     }
 
-    /**
-     * メインのじゃんけん処理を、無限ループしながら実行する.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
     private void executeMainProcessInfinitely(BufferedReader standardInput) throws IOException {
         while (true) {
             this.mainProcess(standardInput);
         }
     }
 
-    /**
-     * メインのじゃんけん処理.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
     private void mainProcess(BufferedReader standardInput) throws IOException {
         System.out.println(
             "[" + Hand.ROCK.getNumber() + "]" + Hand.ROCK + "、" +
@@ -65,16 +50,16 @@ public class Step2 implements JankenGame {
         }
 
         Hand usersHand = Hand.of(Integer.parseInt(userInput));
-        System.out.println(USER_SUBJECT + "が出したのは「" + usersHand + "」です");
+        System.out.println(USER_NAME + "が出したのは「" + usersHand + "」です");
 
         Hand computersHand = Hand.random();
-        System.out.println(COMPUTER_SUBJECT + "が出したのは「" + computersHand + "」です");
+        System.out.println(COMPUTER_NAME + "が出したのは「" + computersHand + "」です");
 
         if (usersHand == computersHand) {
             System.out.println("あいこです。");
             return;
         }
 
-        System.out.println((usersHand.winTo(computersHand) ? USER_SUBJECT : COMPUTER_SUBJECT) + "の勝ちです。");
+        System.out.println((usersHand.winTo(computersHand) ? USER_NAME : COMPUTER_NAME) + "の勝ちです。");
     }
 }

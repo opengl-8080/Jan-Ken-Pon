@@ -12,21 +12,16 @@ import java.io.UncheckedIOException;
  * <p>
  * 以下の値を、クラスにラップした.
  * <ul>
- *   <li>ユーザーの主語→{@link User}
- *   <li>コンピュータの主語→{@link Computer}
+ *   <li>ユーザーの主語→{@link UserName}
+ *   <li>コンピュータの主語→{@link ComputerName}
  *   <li>出し手の数値表現→{@link HandNumber}
  *   <li>出し手の名称→{@link HandName}
  * </ul>
  */
 public class Step3 implements JankenGame {
-    /**ユーザー*/
-    private final User user = new User();
-    /**コンピュータ*/
-    private final Computer computer = new Computer();
+    private final UserName user = new UserName();
+    private final ComputerName computer = new ComputerName();
 
-    /**
-     * じゃんけんプログラムを開始する.
-     */
     @Override
     public void execute() {
         try {
@@ -37,22 +32,12 @@ public class Step3 implements JankenGame {
         }
     }
 
-    /**
-     * メインのじゃんけん処理を、無限ループしながら実行する.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
     private void executeMainProcessInfinitely(BufferedReader standardInput) throws IOException {
         while (true) {
             this.mainProcess(standardInput);
         }
     }
 
-    /**
-     * メインのじゃんけん処理.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
     private void mainProcess(BufferedReader standardInput) throws IOException {
         System.out.println(
             "[" + HandNumber.ROCK + "]" + HandName.ROCK + "、" +
@@ -67,16 +52,16 @@ public class Step3 implements JankenGame {
         }
 
         Hand usersHand = HandNumber.of(userInput.toInt()).getHand();
-        System.out.println(user.getSubject() + "が出したのは「" + usersHand.getName() + "」です");
+        System.out.println(this.user + "が出したのは「" + usersHand.getName() + "」です");
 
         Hand computersHand = HandNumber.random().getHand();
-        System.out.println(computer.getSubject() + "が出したのは「" + computersHand.getName() + "」です");
+        System.out.println(this.computer + "が出したのは「" + computersHand.getName() + "」です");
 
         if (usersHand == computersHand) {
             System.out.println("あいこです。");
             return;
         }
 
-        System.out.println((usersHand.winTo(computersHand) ? user.getSubject() : computer.getSubject()) + "の勝ちです。");
+        System.out.println((usersHand.winTo(computersHand) ? this.user : this.computer) + "の勝ちです。");
     }
 }

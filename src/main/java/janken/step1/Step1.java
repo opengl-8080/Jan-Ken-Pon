@@ -14,30 +14,17 @@ import java.util.regex.Pattern;
  * 第１ステップ、「１つのメソッドにつきインデントは１段階までにすること」を適用.
  */
 public class Step1 implements JankenGame {
-    /**ランダムな値を生成するための {@link Random} インスタンス*/
     private static final Random RANDOM = new Random(System.currentTimeMillis());
-    /**グー*/
     private static final int ROCK = 1;
-    /**チョキ*/
     private static final int SCISSORS = 2;
-    /**パー*/
     private static final int PAPER = 3;
-    /**ユーザーの主語*/
-    private static final String USER_SUBJECT = "あなた";
-    /**コンピュータの主語*/
-    private static final String COMPUTER_SUBJECT = "わたし";
-    /**グーの表示名*/
+    private static final String USER_NAME = "あなた";
+    private static final String COMPUTER_NAME = "わたし";
     private static final String DISPLAY_NAME_ROCK = "グー";
-    /**チョキの表示名*/
     private static final String DISPLAY_NAME_SCISSORS = "チョキ";
-    /**パーの表示名*/
     private static final String DISPLAY_NAME_PAPER = "パー";
-    /**出し手が規定の値かどうかを判定するための正規表現パターン*/
     private static final Pattern HAND_REGEXP_PATTERN = Pattern.compile("[" + ROCK + SCISSORS + PAPER + "]");
 
-    /**
-     * じゃんけんプログラムを開始する.
-     */
     @Override
     public void execute() {
         try {
@@ -48,22 +35,12 @@ public class Step1 implements JankenGame {
         }
     }
 
-    /**
-     * メインのじゃんけん処理を、無限ループしながら実行する.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
     private void executeMainProcessInfinitely(BufferedReader standardInput) throws IOException {
         while (true) {
             this.mainProcess(standardInput);
         }
     }
 
-    /**
-     * メインのじゃんけん処理.
-     * @param standardInput 標準入力をラップした {@link BufferedReader}.
-     * @throws IOException 入力エラーが発生した場合.
-     */
     private void mainProcess(BufferedReader standardInput) throws IOException {
         System.out.println(
             "[" + ROCK + "]" + DISPLAY_NAME_ROCK + "、" +
@@ -90,7 +67,7 @@ public class Step1 implements JankenGame {
             handDisplayName = DISPLAY_NAME_PAPER;
         }
 
-        System.out.println(USER_SUBJECT + "が出したのは「" + handDisplayName + "」です");
+        System.out.println(USER_NAME + "が出したのは「" + handDisplayName + "」です");
 
         int computersHand = RANDOM.nextInt(3) + 1;
 
@@ -102,7 +79,7 @@ public class Step1 implements JankenGame {
             handDisplayName = DISPLAY_NAME_PAPER;
         }
 
-        System.out.println(COMPUTER_SUBJECT + "が出したのは「" + handDisplayName + "」です");
+        System.out.println(COMPUTER_NAME + "が出したのは「" + handDisplayName + "」です");
 
         if (usersHand == computersHand) {
             System.out.println("あいこです。");
@@ -111,22 +88,15 @@ public class Step1 implements JankenGame {
         }
     }
 
-    /**
-     * ユーザーとコンピュータの出し手を比較して、勝者の情報を出力する.
-     * <p>
-     * このメソッドはあいこ以外で使用されることを前提としています.
-     * @param usersHand ユーザーの出し手
-     * @param computersHand コンピュータの出し手
-     */
     private void printWinner(int usersHand, int computersHand) {
         String winner;
 
         if (usersHand == ROCK) {
-            winner = (computersHand == SCISSORS) ? USER_SUBJECT : COMPUTER_SUBJECT;
+            winner = (computersHand == SCISSORS) ? USER_NAME : COMPUTER_NAME;
         } else if (usersHand == SCISSORS) {
-            winner = (computersHand == PAPER) ? USER_SUBJECT : COMPUTER_SUBJECT;
+            winner = (computersHand == PAPER) ? USER_NAME : COMPUTER_NAME;
         } else {
-            winner = (computersHand == ROCK) ? USER_SUBJECT : COMPUTER_SUBJECT;
+            winner = (computersHand == ROCK) ? USER_NAME : COMPUTER_NAME;
         }
 
         System.out.println(winner + "の勝ちです。");
