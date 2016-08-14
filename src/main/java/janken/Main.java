@@ -1,5 +1,6 @@
 package janken;
 
+import janken.javafx.JavaFxMain;
 import janken.step0.Step0;
 import janken.step1.Step1;
 import janken.step2.Step2;
@@ -19,7 +20,8 @@ public class Main {
 //        janken = new Step3();
 //        janken = new Step4();
 //        janken = new Step5();
-        janken = new Step6();
+//        janken = new Step6();
+        janken = new JavaFxMain();
 
         System.out.println(janken.getClass().getSimpleName());
         janken.execute();
