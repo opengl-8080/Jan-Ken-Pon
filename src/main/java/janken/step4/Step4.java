@@ -10,16 +10,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 
+/**
+ * 第４ステップ、「すべてのエンティティを小さくすること」、
+ * 「１つのクラスにつきインスタンス変数は２つまでにすること」を適用.
+ * <p>
+ * ※コメントは行数から除外しています.
+ */
 public class Step4 implements JankenGame {
-    private final User user = new User();
-    private final Computer computer = new Computer();
-    private final BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
 
     @Override
     public void execute() {
         try {
+            User user = new User();
+            Computer computer = new Computer();
+            BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
+
             JankenController controller = new JankenController();
-            controller.execute(this.user, this.computer, this.standardInput);
+            controller.execute(user, computer, standardInput);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
