@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>じゃんけんアプリ</title>
+        <link rel="stylesheet" href="css/janken.css" />
+    </head>
+    <body>
+        <section class="mainSection">
+            <h1>じゃんけんアプリ</h1>
+            <ul class="display">
+                <li id="userMessage"></li>
+                <li id="computerMessage"></li>
+                <li id="resultMessage"></li>
+            </ul>
+
+            <button th:attr="data-number=${model.rockNumber}" th:text="${model.rockName}">rock</button>
+            <button th:attr="data-number=${model.scissorsNumber}" th:text="${model.scissorsName}">scissors</button>
+            <button th:attr="data-number=${model.paperNumber}" th:text="${model.paperName}">paper</button>
+        </section>
+
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/janken.js"></script>
+    </body>
+</html>

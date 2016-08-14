@@ -1,4 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE'
+        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'idea'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -10,13 +22,20 @@ repositories {
 }
 
 dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:3.5.2'
 }
 
 jar {
     baseName = 'janken'
-    manifest {
-        attributes('Main-Class': 'janken.Main')
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
     }
 }
