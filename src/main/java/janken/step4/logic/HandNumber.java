@@ -1,48 +1,38 @@
 package janken.step4.logic;
 
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-/**
- * 出し手の数値表現.
- */
 public enum HandNumber {
-    /**グー*/
     ROCK(1),
-    /**チョキ*/
     SCISSORS(2),
-    /**パー*/
     PAPER(3);
 
-    /**
-     * 指定した文字列が出し手の数値表現にマッチするかどうか判定する.
-     * @param textNumber 判定する文字列
-     * @return 出し手の数値表現にマッチする場合は true
-     */
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
+
+    private static final Pattern HAND_REGEXP_PATTERN =
+            Pattern.compile("[" + ROCK.number + SCISSORS.number + PAPER.number + "]");
+
+    public static HandNumber random() {
+        return HandNumber.values()[RANDOM.nextInt(Hand.values().length)];
+    }
+
     public static boolean isValid(String textNumber) {
-        return textNumber.matches("[" + ROCK.number + SCISSORS.number + PAPER.number + "]");
+        Matcher matcher = HAND_REGEXP_PATTERN.matcher(textNumber);
+        return matcher.matches();
     }
 
-    /**
-     * 指定した数値に対応する出し手({@link Hand})を返却する.
-     * @param number 数値
-     * @return 対応する出し手
-     * @throws IllegalArgumentException 対応する出し手が存在しない場合.
-     */
-    public static Hand toHand(int number) {
+    public static HandNumber of(int number) {
         return Stream.of(values())
-              .filter(it -> it.number == number)
-              .map(it -> Hand.valueOf(it.name()))
-              .findFirst()
-              .orElseThrow(() -> new IllegalArgumentException("不明な値です(" + number + ")."));
+                     .filter(it -> it.number == number)
+                     .findFirst()
+                     .orElseThrow(() -> new IllegalArgumentException("不明な値です(" + number + ")."));
     }
 
-    /**実際の数値*/
     private final int number;
 
-    /**
-     * インスタンスを生成する.
-     * @param number 実際の数値
-     */
     HandNumber(int number) {
         this.number = number;
     }
@@ -50,5 +40,9 @@ public enum HandNumber {
     @Override
     public String toString() {
         return String.valueOf(this.number);
+    }
+
+    public Hand toHand() {
+        return Hand.valueOf(this.name());
     }
 }

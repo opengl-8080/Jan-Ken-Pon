@@ -1,11 +1,11 @@
-package janken.step4_2.controller;
+package janken.step4.controller;
 
-import janken.step4_2.logic.Computer;
-import janken.step4_2.logic.Hand;
-import janken.step4_2.logic.HandName;
-import janken.step4_2.logic.HandNumber;
-import janken.step4_2.logic.User;
-import janken.step4_2.logic.UserInput;
+import janken.step4.logic.Computer;
+import janken.step4.logic.Hand;
+import janken.step4.logic.HandName;
+import janken.step4.logic.HandNumber;
+import janken.step4.logic.User;
+import janken.step4.logic.UserInput;
 
 import java.io.BufferedReader;
 import java.io.IOException;
