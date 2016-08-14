@@ -1,4 +1,4 @@
-package janken.step4_2;
+package janken.step4_2.logic;
 
 import java.util.Random;
 import java.util.regex.Matcher;

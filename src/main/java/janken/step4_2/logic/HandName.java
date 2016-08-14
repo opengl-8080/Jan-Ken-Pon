@@ -1,4 +1,4 @@
-package janken.step4_2;
+package janken.step4_2.logic;
 
 public enum HandName {
     ROCK("グー"),

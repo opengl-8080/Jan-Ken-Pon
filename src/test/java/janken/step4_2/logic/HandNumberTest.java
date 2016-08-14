@@ -1,5 +1,7 @@
-package janken.step4_2;
+package janken.step4_2.logic;
 
+import janken.step4_2.logic.Hand;
+import janken.step4_2.logic.HandNumber;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.*;
