@@ -34,7 +34,7 @@ public class JankenController {
         Hand usersHand = HandNumber.toHand(userInput.toInt());
         System.out.println(user.getSubject() + "が出したのは「" + usersHand.getName() + "」です");
 
-        Hand computersHand = HandNumber.randomHand();
+        Hand computersHand = Hand.random();
         System.out.println(computer.getSubject() + "が出したのは「" + computersHand.getName() + "」です");
 
         if (usersHand == computersHand) {

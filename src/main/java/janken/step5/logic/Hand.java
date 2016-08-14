@@ -1,5 +1,7 @@
 package janken.step5.logic;
 
+import java.util.Random;
+
 public enum Hand {
     ROCK(HandName.ROCK) {
         @Override
@@ -19,6 +21,12 @@ public enum Hand {
             return other == ROCK;
         }
     };
+
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
+
+    public static Hand random() {
+        return values()[RANDOM.nextInt(Hand.values().length)];
+    }
 
     private final HandName name;
 
